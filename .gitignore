@@ -29,5 +29,9 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
+### Terraform files ###
+**/.terraform
+**/terraform.tfstate*
+
 ### VS Code ###
 .vscode/
