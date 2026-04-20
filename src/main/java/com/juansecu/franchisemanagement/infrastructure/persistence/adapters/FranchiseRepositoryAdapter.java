@@ -16,18 +16,19 @@ public class FranchiseRepositoryAdapter implements IFranchiseRepository {
     private final JpaFranchiseRepository jpaFranchiseRepository;
 
     @Override
-    public Mono<Franchise> save(final Franchise franchise) {
-        return Mono.fromCallable(() -> {
-            final FranchiseEntity entity = FranchiseEntity.builder()
-                    .name(franchise.getName())
-                    .build();
-            final FranchiseEntity savedEntity = jpaFranchiseRepository.save(entity);
-
-            return Franchise.builder()
-                    .franchiseId(savedEntity.getFranchiseId())
-                    .name(savedEntity.getName())
-                    .build();
-        }).subscribeOn(Schedulers.boundedElastic());
+    public Mono<Franchise> findById(final Long id) {
+        return Mono.fromCallable(() ->jpaFranchiseRepository.findById(id))
+            .subscribeOn(Schedulers.boundedElastic())
+            .flatMap(optional ->
+                optional
+                    .map(entity -> Mono.just(
+                        Franchise.builder()
+                            .franchiseId(entity.getFranchiseId())
+                            .name(entity.getName())
+                            .build()
+                    ))
+                    .orElse(Mono.empty())
+            );
     }
 
     @Override
@@ -46,5 +47,20 @@ public class FranchiseRepositoryAdapter implements IFranchiseRepository {
                             )
                         )
                         .orElse(Mono.empty()));
+    }
+
+    @Override
+    public Mono<Franchise> save(final Franchise franchise) {
+        return Mono.fromCallable(() -> {
+            final FranchiseEntity entity = FranchiseEntity.builder()
+                .name(franchise.getName())
+                .build();
+            final FranchiseEntity savedEntity = jpaFranchiseRepository.save(entity);
+
+            return Franchise.builder()
+                .franchiseId(savedEntity.getFranchiseId())
+                .name(savedEntity.getName())
+                .build();
+        }).subscribeOn(Schedulers.boundedElastic());
     }
 }

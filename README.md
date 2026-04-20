@@ -35,6 +35,11 @@ La estructura es la siguiente:
 │   │    │   └── README.md # Documentación de las plantillas de infraestructura de Render
 │   │    └── README.md # Documentación de las plantillas de infraestructura
 │   └── README.md # Documentación de la infraestructura
+├── requests/ # Solicitudes HTTP de la aplicación
+│   ├── branches # Solicitudes HTTP relacionadas a las sucursales
+│   │   └── create-branch.http # Solicitud HTTP de creación de Branch
+│   └── franchises/ # Solicitudes HTTP relacionadas a las franquicias
+│       └── create-franchise.http # Solicitud HTTP de creación de Franchise
 ├── src/ # Código fuente
 │   ├── main/ # Código fuente, configuración y tests de la aplicación
 │   │   ├── java/ # Código fuente en Java
