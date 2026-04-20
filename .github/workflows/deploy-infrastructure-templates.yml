@@ -37,3 +37,5 @@ jobs:
           TF_VAR_postgres_user: ${{ secrets.POSTGRES_USER }}
           TF_VAR_web_service_name: ${{ secrets.WEB_SERVICE_NAME }}
         run: terraform apply -auto-approve
+      - name: Trigger deployment of Render services
+        run: curl ${{ secrets.RENDER_DEPLOYMENT_HOOK_URL }}
