@@ -11,10 +11,8 @@ resource "render_web_service" "web" {
   }
 
   env_vars = {
-    "POSTGRES_DATABASE_NAME" = { value = var.postgres_database_name },
-    "spring.datasource.url" = { value = "jdbc:${render_postgres.postgres_instance.connection_info.internal_connection_string}?useSSL=true&serverTimezone=UTC&allowPublicKeyRetrieval=true" },
-    "POSTGRES_PASSWORD" = { value = render_postgres.postgres_instance.connection_info.password },
-    "POSTGRES_USER" = { value = var.postgres_user }
+    "POSTGRES_DATABASE_URL" = { value = "jdbc:${render_postgres.postgres_instance.connection_info.internal_connection_string}" },
+    "SPRING_PROFILES_ACTIVE" = { value = "prod" }
   }
 
   notification_override = {
