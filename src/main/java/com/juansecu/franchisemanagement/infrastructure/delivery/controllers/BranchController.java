@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
 import com.juansecu.franchisemanagement.application.usecases.CreateBranchUseCase;
+import com.juansecu.franchisemanagement.application.usecases.UpdateBranchNameUseCase;
 import com.juansecu.franchisemanagement.infrastructure.delivery.dtos.requests.CreateBranchRequest;
+import com.juansecu.franchisemanagement.infrastructure.delivery.dtos.requests.UpdateBranchNameRequest;
 import com.juansecu.franchisemanagement.infrastructure.delivery.dtos.responses.BranchResponse;
 
 @RestController
@@ -15,6 +17,7 @@ import com.juansecu.franchisemanagement.infrastructure.delivery.dtos.responses.B
 @RequiredArgsConstructor
 public class BranchController {
     private final CreateBranchUseCase createBranchUseCase;
+    private final UpdateBranchNameUseCase updateBranchNameUseCase;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -23,6 +26,22 @@ public class BranchController {
     ) {
         return createBranchUseCase
             .execute(request.getName(), request.getFranchiseId())
+            .map(branch ->
+                BranchResponse.builder()
+                    .branchId(branch.getBranchId())
+                    .name(branch.getName())
+                    .franchiseId(branch.getFranchiseId())
+                    .build()
+            );
+    }
+
+    @PatchMapping("/{branchId}/name")
+    public Mono<BranchResponse> updateBranchName(
+        @PathVariable Long branchId,
+        @Valid @RequestBody UpdateBranchNameRequest request
+    ) {
+        return updateBranchNameUseCase
+            .execute(branchId, request.getName())
             .map(branch ->
                 BranchResponse.builder()
                     .branchId(branch.getBranchId())

@@ -1,0 +1,6 @@
+PATCH http://localhost:8080/api/branches/1/name
+Content-Type: application/json
+
+{
+  "name": "Branch #1"
+}

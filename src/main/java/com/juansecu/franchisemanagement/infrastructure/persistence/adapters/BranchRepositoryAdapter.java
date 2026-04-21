@@ -62,6 +62,7 @@ public class BranchRepositoryAdapter implements IBranchRepository {
     public Mono<Branch> save(final Branch branch) {
         return Mono.fromCallable(() -> {
             final BranchEntity entity = BranchEntity.builder()
+                    .branchId(branch.getBranchId())
                     .name(branch.getName())
                     .franchise(FranchiseEntity.builder().franchiseId(branch.getFranchiseId()).build())
                     .build();

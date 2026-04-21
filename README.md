@@ -37,7 +37,8 @@ La estructura es la siguiente:
 │   └── README.md # Documentación de la infraestructura
 ├── requests/ # Solicitudes HTTP de la aplicación
 │   ├── branches # Solicitudes HTTP relacionadas a las sucursales
-│   │   └── create-branch.http # Solicitud HTTP de creación de Branch
+│   │   ├── create-branch.http # Solicitud HTTP de creación de Branch
+│   │   └── update-branch-name.http # Solicitud HTTP de actualización de nombre de Branch
 │   ├── franchises/ # Solicitudes HTTP relacionadas a las franquicias
 │   │   ├── create-franchise.http # Solicitud HTTP de creación de Franchise
 │   │   └── update-franchise-name.http # Solicitud HTTP de actualización de nombre de Franchise
