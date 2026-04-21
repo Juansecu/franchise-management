@@ -8,8 +8,10 @@ import reactor.core.publisher.Mono;
 
 import com.juansecu.franchisemanagement.application.usecases.AddProductUseCase;
 import com.juansecu.franchisemanagement.application.usecases.RemoveProductUseCase;
+import com.juansecu.franchisemanagement.application.usecases.UpdateProductNameUseCase;
 import com.juansecu.franchisemanagement.application.usecases.UpdateProductStockUseCase;
 import com.juansecu.franchisemanagement.infrastructure.delivery.dtos.requests.AddProductRequest;
+import com.juansecu.franchisemanagement.infrastructure.delivery.dtos.requests.UpdateProductNameRequest;
 import com.juansecu.franchisemanagement.infrastructure.delivery.dtos.requests.UpdateStockRequest;
 import com.juansecu.franchisemanagement.infrastructure.delivery.dtos.responses.ProductResponse;
 
@@ -19,6 +21,7 @@ import com.juansecu.franchisemanagement.infrastructure.delivery.dtos.responses.P
 public class ProductController {
     private final AddProductUseCase addProductUseCase;
     private final RemoveProductUseCase removeProductUseCase;
+    private final UpdateProductNameUseCase updateProductNameUseCase;
     private final UpdateProductStockUseCase updateProductStockUseCase;
 
     @PostMapping
@@ -46,6 +49,23 @@ public class ProductController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public Mono<Void> removeProduct(@PathVariable Long productId) {
         return removeProductUseCase.execute(productId);
+    }
+
+    @PatchMapping("/{productId}/name")
+    public Mono<ProductResponse> updateName(
+        @PathVariable Long productId,
+        @Valid @RequestBody UpdateProductNameRequest request
+    ) {
+        return updateProductNameUseCase
+            .execute(productId, request.getName())
+            .map(product ->
+                ProductResponse.builder()
+                    .productId(product.getProductId())
+                    .name(product.getName())
+                    .stock(product.getStock())
+                    .branchId(product.getBranchId())
+                    .build()
+            );
     }
 
     @PatchMapping("/{productId}/stock")

@@ -1,0 +1,6 @@
+PATCH http://localhost:8080/api/products/2/name
+Content-Type: application/json
+
+{
+    "name": "Producto 2"
+}
