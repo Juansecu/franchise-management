@@ -17,6 +17,31 @@ public class ProductRepositoryAdapter implements IProductRepository {
     private final JpaProductRepository jpaProductRepository;
 
     @Override
+    public Mono<Void> deleteById(final Long productId) {
+        return Mono.<Void>fromRunnable(
+            () -> jpaProductRepository.deleteById(productId)
+        ).subscribeOn(Schedulers.boundedElastic());
+    }
+
+    @Override
+    public Mono<Product> findById(final Long productId) {
+        return Mono.fromCallable(() -> jpaProductRepository.findById(productId))
+            .subscribeOn(Schedulers.boundedElastic())
+            .flatMap(optional ->
+                optional.map(entity ->
+                    Mono.just(
+                        Product.builder()
+                            .productId(entity.getProductId())
+                            .name(entity.getName())
+                            .stock(entity.getStock())
+                            .branchId(entity.getBranch().getBranchId())
+                            .build()
+                    )
+                )
+                .orElse(Mono.empty()));
+    }
+
+    @Override
     public Mono<Product> findByNameAndBranchId(
         final String name,
         final Long branchId

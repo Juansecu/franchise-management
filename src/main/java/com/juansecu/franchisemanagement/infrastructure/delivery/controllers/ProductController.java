@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
 import com.juansecu.franchisemanagement.application.usecases.AddProductUseCase;
+import com.juansecu.franchisemanagement.application.usecases.RemoveProductUseCase;
 import com.juansecu.franchisemanagement.infrastructure.delivery.dtos.requests.AddProductRequest;
 import com.juansecu.franchisemanagement.infrastructure.delivery.dtos.responses.ProductResponse;
 
@@ -15,6 +16,7 @@ import com.juansecu.franchisemanagement.infrastructure.delivery.dtos.responses.P
 @RequiredArgsConstructor
 public class ProductController {
     private final AddProductUseCase addProductUseCase;
+    private final RemoveProductUseCase removeProductUseCase;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -35,5 +37,11 @@ public class ProductController {
                     .branchId(product.getBranchId())
                     .build()
             );
+    }
+
+    @DeleteMapping("/{productId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public Mono<Void> removeProduct(@PathVariable Long productId) {
+        return removeProductUseCase.execute(productId);
     }
 }

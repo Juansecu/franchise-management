@@ -41,7 +41,8 @@ La estructura es la siguiente:
 │   ├── franchises/ # Solicitudes HTTP relacionadas a las franquicias
 │   │   └── create-franchise.http # Solicitud HTTP de creación de Franchise
 │   └── products/ # Solicitudes HTTP relacionadas a los productos
-│       └── add-product.http # Solicitud HTTP de creación de producto
+│       ├── add-product.http # Solicitud HTTP de creación de producto
+│       └── remove-product.http # Solicitud HTTP de eliminación de producto
 ├── src/ # Código fuente
 │   ├── main/ # Código fuente, configuración y tests de la aplicación
 │   │   ├── java/ # Código fuente en Java
