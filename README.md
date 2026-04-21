@@ -187,3 +187,11 @@ Para correr la aplicación utilizando Java, debes:
 Para poder desplegar la infraestructura necesaria en la nube,
 puedes utilizar las plantillas de Terraform ubicadas en el directorio
 [`infrastructure/templates`](./infrastructure/templates/README.md).
+
+## Testear Aplicación
+
+Para testear la aplicación, puedes:
+
+- Utilizar las peticiones HTTP ubicadas en [`la carpeta requests`](./requests)
+- Ejecutar las pruebas unitarias y de integración
+  utilizando el comando `./mvnw test` en la raíz del proyecto
