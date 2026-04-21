@@ -38,8 +38,10 @@ La estructura es la siguiente:
 ├── requests/ # Solicitudes HTTP de la aplicación
 │   ├── branches # Solicitudes HTTP relacionadas a las sucursales
 │   │   └── create-branch.http # Solicitud HTTP de creación de Branch
-│   └── franchises/ # Solicitudes HTTP relacionadas a las franquicias
-│       └── create-franchise.http # Solicitud HTTP de creación de Franchise
+│   ├── franchises/ # Solicitudes HTTP relacionadas a las franquicias
+│   │   └── create-franchise.http # Solicitud HTTP de creación de Franchise
+│   └── products/ # Solicitudes HTTP relacionadas a los productos
+│       └── add-product.http # Solicitud HTTP de creación de producto
 ├── src/ # Código fuente
 │   ├── main/ # Código fuente, configuración y tests de la aplicación
 │   │   ├── java/ # Código fuente en Java

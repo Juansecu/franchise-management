@@ -17,6 +17,23 @@ public class BranchRepositoryAdapter implements IBranchRepository {
     private final JpaBranchRepository jpaBranchRepository;
 
     @Override
+    public Mono<Branch> findById(final Long branchId) {
+        return Mono.fromCallable(() -> jpaBranchRepository.findById(branchId))
+            .subscribeOn(Schedulers.boundedElastic())
+            .flatMap(optional ->
+                optional.map(entity ->
+                    Mono.just(
+                        Branch.builder()
+                            .branchId(entity.getBranchId())
+                            .name(entity.getName())
+                            .franchiseId(entity.getFranchise().getFranchiseId())
+                            .build()
+                    )
+                ).orElse(Mono.empty())
+            );
+    }
+
+    @Override
     public Mono<Branch> findByNameAndFranchiseId(
         final String name,
         final Long franchiseId
