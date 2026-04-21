@@ -39,7 +39,8 @@ La estructura es la siguiente:
 │   ├── branches # Solicitudes HTTP relacionadas a las sucursales
 │   │   └── create-branch.http # Solicitud HTTP de creación de Branch
 │   ├── franchises/ # Solicitudes HTTP relacionadas a las franquicias
-│   │   └── create-franchise.http # Solicitud HTTP de creación de Franchise
+│   │   ├── create-franchise.http # Solicitud HTTP de creación de Franchise
+│   │   └── update-franchise-name.http # Solicitud HTTP de actualización de nombre de Franchise
 │   └── products/ # Solicitudes HTTP relacionadas a los productos
 │       ├── add-product.http # Solicitud HTTP de creación de producto
 │       ├── remove-product.http # Solicitud HTTP de eliminación de producto

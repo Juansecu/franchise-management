@@ -10,6 +10,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Mono;
 
 import com.juansecu.franchisemanagement.application.usecases.CreateFranchiseUseCase;
+import com.juansecu.franchisemanagement.application.usecases.UpdateFranchiseNameUseCase;
 import com.juansecu.franchisemanagement.domain.models.Franchise;
 import com.juansecu.franchisemanagement.infrastructure.delivery.dtos.requests.CreateFranchiseRequest;
 
@@ -25,28 +26,32 @@ class FranchiseControllerTest {
     @MockitoBean
     private CreateFranchiseUseCase createFranchiseUseCase;
 
+    @MockitoBean
+    private UpdateFranchiseNameUseCase updateFranchiseNameUseCase;
+
     @Test
     void createFranchise_shouldReturnCreated() {
-        CreateFranchiseRequest request = CreateFranchiseRequest.builder()
-                .name("New Franchise")
-                .build();
-
+        final CreateFranchiseRequest request = CreateFranchiseRequest.builder()
+            .name("New Franchise")
+            .build();
         final Franchise franchise = Franchise.builder()
-                .franchiseId(1L)
-                .name("New Franchise")
-                .build();
+            .franchiseId(1L)
+            .name("New Franchise")
+            .build();
 
-        when(createFranchiseUseCase.execute(anyString()))
-                .thenReturn(Mono.just(franchise));
+        when(
+            createFranchiseUseCase.execute(anyString())
+        ).thenReturn(Mono.just(franchise));
 
-        webTestClient.post()
-                .uri("/api/franchises")
-                .contentType(MediaType.APPLICATION_JSON)
-                .bodyValue(request)
-                .exchange()
-                .expectStatus().isCreated()
-                .expectBody()
-                .jsonPath("$.franchiseId").isEqualTo(1)
-                .jsonPath("$.name").isEqualTo("New Franchise");
+        webTestClient
+            .post()
+            .uri("/api/franchises")
+            .contentType(MediaType.APPLICATION_JSON)
+            .bodyValue(request)
+            .exchange()
+            .expectStatus().isCreated()
+            .expectBody()
+            .jsonPath("$.franchiseId").isEqualTo(1)
+            .jsonPath("$.name").isEqualTo("New Franchise");
     }
 }

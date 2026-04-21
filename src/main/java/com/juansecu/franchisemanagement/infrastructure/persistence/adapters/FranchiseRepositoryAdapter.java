@@ -53,6 +53,7 @@ public class FranchiseRepositoryAdapter implements IFranchiseRepository {
     public Mono<Franchise> save(final Franchise franchise) {
         return Mono.fromCallable(() -> {
             final FranchiseEntity entity = FranchiseEntity.builder()
+                .franchiseId(franchise.getFranchiseId())
                 .name(franchise.getName())
                 .build();
             final FranchiseEntity savedEntity = jpaFranchiseRepository.save(entity);
