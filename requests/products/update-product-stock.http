@@ -1,0 +1,6 @@
+PATCH http://localhost:8080/api/products/2/stock
+Content-Type: application/json
+
+{
+    "stock": 1000
+}

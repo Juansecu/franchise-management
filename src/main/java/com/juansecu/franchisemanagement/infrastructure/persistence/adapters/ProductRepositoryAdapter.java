@@ -68,6 +68,7 @@ public class ProductRepositoryAdapter implements IProductRepository {
     public Mono<Product> save(Product product) {
         return Mono.fromCallable(() -> {
             ProductEntity entity = ProductEntity.builder()
+                    .productId(product.getProductId())
                     .name(product.getName())
                     .stock(product.getStock())
                     .branch(BranchEntity.builder().branchId(product.getBranchId()).build())

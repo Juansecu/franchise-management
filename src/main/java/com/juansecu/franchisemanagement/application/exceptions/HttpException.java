@@ -19,6 +19,35 @@ public class HttpException extends RuntimeException {
         this.statusCode = statusCode;
     }
 
+    public static HttpException badRequest(final String message) {
+        return HttpException.badRequest(message, "BadRequest", null);
+    }
+
+    public static HttpException badRequest(
+        final String message,
+        final String errorCode
+    ) {
+        return HttpException.badRequest(message, errorCode, null);
+    }
+
+    public static HttpException badRequest(
+        final String message,
+        final String errorCode,
+        final BaseResponse<Object> response
+    ) {
+        final BaseResponse<Object> res = HttpException.getResponseBody(
+            message,
+            errorCode,
+            response
+        );
+
+        return new HttpException(
+            message,
+            400,
+            res
+        );
+    }
+
     public static HttpException conflict(final String message) {
         return HttpException.conflict(message, "Conflict", null);
     }
@@ -35,14 +64,11 @@ public class HttpException extends RuntimeException {
         final String errorCode,
         final BaseResponse<Object> response
     ) {
-        final BaseResponse<Object> res = response != null
-            ? response
-            : BaseResponse.builder()
-              .data(null)
-              .errorCode(errorCode)
-              .message(message)
-              .success(false)
-              .build();
+        final BaseResponse<Object> res = HttpException.getResponseBody(
+            message,
+            errorCode,
+            response
+        );
 
         return new HttpException(
             message,
@@ -67,7 +93,25 @@ public class HttpException extends RuntimeException {
         final String errorCode,
         final BaseResponse<Object> response
     ) {
-        final BaseResponse<Object> res = response != null
+        final BaseResponse<Object> res = HttpException.getResponseBody(
+            message,
+            errorCode,
+            response
+        );
+
+        return new HttpException(
+            message,
+            404,
+            res
+        );
+    }
+
+    private static BaseResponse<Object> getResponseBody(
+        final String message,
+        final String errorCode,
+        final BaseResponse<Object> response
+    ) {
+        return response != null
             ? response
             : BaseResponse.builder()
               .data(null)
@@ -75,11 +119,5 @@ public class HttpException extends RuntimeException {
               .message(message)
               .success(false)
               .build();
-
-        return new HttpException(
-            message,
-            404,
-            res
-        );
     }
 }
